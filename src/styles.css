@@ -1,0 +1,161 @@
+body {
+  background: #000000;
+  /* Bottom layer: animated dot pattern */
+  background-image: radial-gradient(#ffffffaf 1px, transparent 0);
+  background-size: 25px 24px;
+  background-position: 11px 11px;
+  background-repeat: repeat;
+  color: white;
+  animation: bg-scroll 1s linear infinite;
+}
+
+/* Middle layer: mountain image (opacity 0.5) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('/static/images/mountain-range.jpeg') center / cover no-repeat;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top layer: vignette overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 40%, rgba(0, 0, 0, 0.9) 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@font-face {
+  font-family: "Aeonik Pro Medium";
+  src: local("Aeonik Pro Medium"), local("AeonikPro-Medium"), local("Aeonik Pro");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@keyframes bg-scroll {
+  to {
+    /* scroll dot pattern downward by one cell height */
+    background-position: 11px 35px;
+  }
+}
+
+img {
+  width: 100%;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+  /* removed unused animation 'move' */
+  z-index: 2; /* above image and vignette layers */
+}
+
+h1 {
+  font-size: 5rem;
+  display: block;
+  font-family: sans-serif;
+}
+
+.site-title {
+  margin: 0;
+  line-height: 1.05;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  font-family: "Aeonik Pro Medium", "Aeonik Pro", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  font-size: clamp(2.2rem, 8vw, 5rem);
+  text-shadow:
+    0 0 1px rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-link {
+  color: #fff;
+  opacity: 0.9;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.social-grid {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+
+
+/* Animated shine on social glass cards via box-shadow */
+@keyframes shineShadow {
+  0% {
+    box-shadow: inset 0 0 4px 0 rgba(255, 255, 255, 0.6), 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    box-shadow: inset 0 0 5px 1px rgba(255, 255, 255, 0.8), 0 0 18px 2px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: inset 0 0 4px 0 rgba(255, 255, 255, 0.6), 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.social-box {
+  will-change: box-shadow;
+}
+
+.social-box:hover {
+  animation: shineShadow 1.25s ease-in-out infinite;
+}
+
+/* Tilted 'e' letters: preserve spacing */
+.tilt-e {
+  display: inline-block;
+  transform-origin: 50% 65%;
+  vertical-align: baseline;
+  animation: tilt 2.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.tilt-e--r {
+  animation-delay: 0.35s;
+}
+
+@keyframes tilt {
+  0%   { transform: rotate(-6deg); }
+  50%  { transform: rotate(6deg); }
+  100% { transform: rotate(-6deg); }
+}
